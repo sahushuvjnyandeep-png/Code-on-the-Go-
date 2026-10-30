@@ -1,0 +1,277 @@
+app>main>res>layout>activity.xml*
+
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#101820">
+
+    <!-- Live camera preview -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Waste inspection camera"
+        app:scaleType="fillCenter" />
+
+    <!-- Focus square made entirely from standard Android views -->
+    <FrameLayout
+        android:id="@+id/focusMarker"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_gravity="center"
+        android:clickable="false"
+        android:focusable="false">
+
+        <!-- Top-left corner -->
+        <View
+            android:layout_width="44dp"
+            android:layout_height="4dp"
+            android:layout_gravity="top|start"
+            android:background="#00E5A0" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="44dp"
+            android:layout_gravity="top|start"
+            android:background="#00E5A0" />
+
+        <!-- Top-right corner -->
+        <View
+            android:layout_width="44dp"
+            android:layout_height="4dp"
+            android:layout_gravity="top|end"
+            android:background="#00E5A0" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="44dp"
+            android:layout_gravity="top|end"
+            android:background="#00E5A0" />
+
+        <!-- Bottom-left corner -->
+        <View
+            android:layout_width="44dp"
+            android:layout_height="4dp"
+            android:layout_gravity="bottom|start"
+            android:background="#00E5A0" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="44dp"
+            android:layout_gravity="bottom|start"
+            android:background="#00E5A0" />
+
+        <!-- Bottom-right corner -->
+        <View
+            android:layout_width="44dp"
+            android:layout_height="4dp"
+            android:layout_gravity="bottom|end"
+            android:background="#00E5A0" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="44dp"
+            android:layout_gravity="bottom|end"
+            android:background="#00E5A0" />
+
+    </FrameLayout>
+
+    <!-- Bottom control panel -->
+    <ScrollView
+        android:id="@+id/controlScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#E6101820"
+        android:fillViewport="false"
+        android:overScrollMode="ifContentScrolls">
+
+        <LinearLayout
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp">
+
+            <!-- Application title -->
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:text="WasteSorter"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:text="AI WASTE INSPECTION SYSTEM"
+                android:textColor="#00E5A0"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- Current application status -->
+            <TextView
+                android:id="@+id/statusChip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#26333C"
+                android:padding="9dp"
+                android:text="STARTING CAMERA..."
+                android:textColor="#FFC400"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Automatic sorting option -->
+            <Switch
+                android:id="@+id/autoSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:checked="true"
+                android:text="AUTO SORT"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <!-- Predicted category -->
+            <TextView
+                android:id="@+id/classText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="4dp"
+                android:text="READY"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <!-- Model confidence -->
+            <TextView
+                android:id="@+id/confText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:text="CONFIDENCE: --%"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <ProgressBar
+                android:id="@+id/confBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressTint="#00E5A0" />
+
+            <!-- Instructions and additional information -->
+            <TextView
+                android:id="@+id/metaText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Place one waste item inside the focus square."
+                android:textColor="#D9E2E8"
+                android:textSize="13sp" />
+
+            <!-- Manual classification, shown when needed -->
+            <TextView
+                android:id="@+id/manualTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="6dp"
+                android:text="CONFIRM THE CATEGORY"
+                android:textColor="#FFC400"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/manualButtonsRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/organicButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="0dp"
+                    android:text="ORGANIC"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/inorganicButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="0dp"
+                    android:text="INORGANIC"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/mixedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="0dp"
+                    android:text="MIXED"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <!-- Camera/model inspection and ESP32 test -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="4dp">
+
+                <Button
+                    android:id="@+id/testButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="0dp"
+                    android:text="TEST ESP32"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/sortButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="0dp"
+                    android:text="ANALYZE ITEM"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- Export corrected examples for later model retraining -->
+            <Button
+                android:id="@+id/exportButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="EXPORT TRAINING FEEDBACK"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
